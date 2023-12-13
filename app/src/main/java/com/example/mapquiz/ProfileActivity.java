@@ -186,6 +186,7 @@ public class ProfileActivity extends AppCompatActivity {
 //            }
 //        });
 // Hello
+        // My name is Adrian
     }
 
     private void enableEditText(EditText editText) {
