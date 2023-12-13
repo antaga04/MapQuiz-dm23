@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "969290177463",
+    "project_id": "mapquiz-dm23",
+    "storage_bucket": "mapquiz-dm23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969290177463:android:6677514a584fafe98b6632",
+        "android_client_info": {
+          "package_name": "com.example.mapquiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBihivvPTKrZSbU6lKhKbnhsSL6YIQ-q7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="orange">#FF5722</color>
+    <color name="koromiko">#FFBA5F</color>
+    <color name="green">#009688</color>
+    <color name="salem">#0A8F4B</color>
+    <color name="primary">#0077B6</color>
+    <color name="secondary">#03254C</color>
+
+    <color name="primary_quiz">#003366</color>
+    <color name="next_button_color">#3297ca</color>
+    <color name="red">#ff6666</color>
+</resources>
