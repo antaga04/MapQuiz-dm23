@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,39 +15,45 @@ import androidx.core.content.ContextCompat;
 
 import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class DashBoardActivity extends AppCompatActivity {
 
     CountDownTimer countDownTimer;
     int timervalue = 20;
     IconRoundCornerProgressBar progressBar;
-    ArrayList<Modelclass> allQuestionList;
-    Modelclass modelclass;
     TextView card_question, optionA, optionB, optionC, optionD;
     CardView cardOA, cardOB, cardOC, cardOD;
     int index = 0;
     int correctCount = 0;
     int wrongCount = 0;
     LinearLayout nextBtn;
+    List<Question> questions;
+    List<Country> countries;
+    Question Q1;
+    Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
-        allQuestionList = new ArrayList<>();
-        allQuestionList.add(new Modelclass("España", "Italia", "España", "Alemania", "Portugal", "España"));
-        allQuestionList.add(new Modelclass("Francia", "España", "Italia", "Francia", "Reino Unido", "Francia"));
-        allQuestionList.add(new Modelclass("Alemania", "España", "Alemania", "Francia", "Polonia", "Alemania"));
-        allQuestionList.add(new Modelclass("Italia", "Portugal", "Italia", "Francia", "Suiza", "Italia"));
-        allQuestionList.add(new Modelclass("Portugal", "España", "Italia", "Portugal", "Irlanda", "Portugal"));
+        loadCountries();
+        loadQuestions();
 
         findIds();
 
-        Collections.shuffle(allQuestionList);
-        modelclass = allQuestionList.get(index);
+        Collections.shuffle(questions);
+        Q1 = questions.get(index);
 
         nextBtn.setClickable(false);
 
@@ -74,15 +81,59 @@ public class DashBoardActivity extends AppCompatActivity {
                 dialog.show();
             }
         }.start();
+    }
 
+    private void loadCountries() {
+        countries = new ArrayList<>();
+        try {
+            // Load JSON data from file
+            InputStream inputStream = getAssets().open("countries.json");
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+
+            // Convert the buffer into a string
+            String json = new String(buffer);
+
+            // Print JSON content to log (for debugging purposes)
+            Log.d("JSON_CONTENT", json);
+
+            // Parse JSON array
+            JSONArray jsonArray = new JSONArray(json);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Country c = new Country(jsonObject);
+                countries.add(c);
+            }
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadQuestions() {
+        questions = new ArrayList<>();
+        random = new Random();
+
+        for (int i = 0; i < 5; i++) {
+            Question question = new Question();
+            question.setOpA(countries.get(random.nextInt(countries.size())));
+            question.setOpB(countries.get(random.nextInt(countries.size())));
+            question.setOpC(countries.get(random.nextInt(countries.size())));
+            question.setOpD(countries.get(random.nextInt(countries.size())));
+
+            questions.add(question);
+        }
     }
 
     private void setAllData() {
-        card_question.setText(modelclass.getQuestion());
-        optionA.setText(modelclass.getOpA());
-        optionB.setText(modelclass.getOpB());
-        optionC.setText(modelclass.getOpC());
-        optionD.setText(modelclass.getOpD());
+
+        card_question.setText(Q1.getRandomOption().getFlagUrl());
+        optionA.setText(Q1.getOpA().getName());
+        optionB.setText(Q1.getOpB().getName());
+        optionC.setText(Q1.getOpC().getName());
+        optionD.setText(Q1.getOpD().getName());
+
 /*      timervalue = 20;
         countDownTimer.cancel();
         countDownTimer.start();
@@ -105,20 +156,19 @@ public class DashBoardActivity extends AppCompatActivity {
 
         nextBtn = findViewById(R.id.nextBtn);
     }
-
-    public void setCorrect() {
+    public void setCorrect(){
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (index < allQuestionList.size() - 1) {
+                if (index < questions.size()-1){
                     index++;
-                    modelclass = allQuestionList.get(index);
+                    Q1 = questions.get(index);
                     resetColor();
                     setAllData();
                     enableButton();
                     nextBtn.setClickable(false);
-                } else {
-                    GameWon();
+                }else{
+                    gameWon();
                 }
             }
         });
@@ -128,21 +178,20 @@ public class DashBoardActivity extends AppCompatActivity {
         int viewId = view.getId();
 
         if (viewId == R.id.cardA) {
-            handleOptionClick(modelclass.getOpA(), cardOA);
+            handleOptionClick(Q1.getOpA(), cardOA);
         } else if (viewId == R.id.cardB) {
-            handleOptionClick(modelclass.getOpB(), cardOB);
+            handleOptionClick(Q1.getOpB(), cardOB);
         } else if (viewId == R.id.cardC) {
-            handleOptionClick(modelclass.getOpC(), cardOC);
+            handleOptionClick(Q1.getOpC(), cardOC);
         } else if (viewId == R.id.cardD) {
-            handleOptionClick(modelclass.getOpD(), cardOD);
+            handleOptionClick(Q1.getOpD(), cardOD);
         }
     }
-
-    public void handleOptionClick(String selectedOption, CardView cardView) {
+    public void handleOptionClick(Country selectedOption, CardView cardView) {
         disableButton();
         nextBtn.setClickable(true);
 
-        if (selectedOption.equals(modelclass.getCorrect())) {
+        if (selectedOption.getFlagUrl().equals(card_question.getText().toString())) {
             cardView.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
             correctCount++;
         } else {
@@ -152,7 +201,7 @@ public class DashBoardActivity extends AppCompatActivity {
         setCorrect();
     }
 
-    private void GameWon() {
+    private void gameWon() {
         Intent intent = new Intent(DashBoardActivity.this, WonActivity.class);
         intent.putExtra("Correct", correctCount);
         intent.putExtra("Wrong", wrongCount);
