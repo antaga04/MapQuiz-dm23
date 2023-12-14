@@ -42,7 +42,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:onClick="OptionAClick"
+        android:onClick="OptionClick"
         android:id="@+id/cardA"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -64,7 +64,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:onClick="OptionBClick"
+        android:onClick="OptionClick"
         android:id="@+id/cardB"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -86,7 +86,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:onClick="OptionCClick"
+        android:onClick="OptionClick"
         android:id="@+id/cardC"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -108,7 +108,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:onClick="OptionDClick"
+        android:onClick="OptionClick"
         android:id="@+id/cardD"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -106,10 +106,7 @@ public class DashBoardActivity extends AppCompatActivity {
         nextBtn = findViewById(R.id.nextBtn);
     }
 
-    public void Correct(CardView c) {
-        correctCount++;
-        c.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
-
+    public void setCorrect() {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,25 +124,32 @@ public class DashBoardActivity extends AppCompatActivity {
         });
     }
 
-    public void Wrong(CardView c) {
-        wrongCount++;
-        c.setBackgroundColor(ContextCompat.getColor(this, R.color.red));
+    public void OptionClick(View view) {
+        int viewId = view.getId();
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (index < allQuestionList.size() - 1) {
-                    index++;
-                    modelclass = allQuestionList.get(index);
-                    resetColor();
-                    setAllData();
-                    enableButton();
-                    nextBtn.setClickable(false);
-                } else {
-                    GameWon();
-                }
-            }
-        });
+        if (viewId == R.id.cardA) {
+            handleOptionClick(modelclass.getOpA(), cardOA);
+        } else if (viewId == R.id.cardB) {
+            handleOptionClick(modelclass.getOpB(), cardOB);
+        } else if (viewId == R.id.cardC) {
+            handleOptionClick(modelclass.getOpC(), cardOC);
+        } else if (viewId == R.id.cardD) {
+            handleOptionClick(modelclass.getOpD(), cardOD);
+        }
+    }
+
+    public void handleOptionClick(String selectedOption, CardView cardView) {
+        disableButton();
+        nextBtn.setClickable(true);
+
+        if (selectedOption.equals(modelclass.getCorrect())) {
+            cardView.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
+            correctCount++;
+        } else {
+            cardView.setBackgroundColor(ContextCompat.getColor(this, R.color.red));
+            wrongCount++;
+        }
+        setCorrect();
     }
 
     private void GameWon() {
@@ -176,46 +180,4 @@ public class DashBoardActivity extends AppCompatActivity {
         cardOD.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
     }
 
-    public void OptionAClick(View view) {
-        disableButton();
-        nextBtn.setClickable(true);
-        if (modelclass.getOpA().equals(modelclass.getCorrect())) {
-            cardOA.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
-            Correct(cardOA);
-        } else {
-            Wrong(cardOA);
-        }
-    }
-
-    public void OptionBClick(View view) {
-        disableButton();
-        nextBtn.setClickable(true);
-        if (modelclass.getOpB().equals(modelclass.getCorrect())) {
-            cardOB.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
-            Correct(cardOB);
-        } else {
-            Wrong(cardOB);
-        }
-
-    }
-
-    public void OptionCClick(View view) {
-        disableButton();
-        nextBtn.setClickable(true);
-        if (modelclass.getOpC().equals(modelclass.getCorrect())) {
-            Correct(cardOC);
-        } else {
-            Wrong(cardOC);
-        }
-    }
-
-    public void OptionDClick(View view) {
-        disableButton();
-        nextBtn.setClickable(true);
-        if (modelclass.getOpD().equals(modelclass.getCorrect())) {
-            Correct(cardOD);
-        } else {
-            Wrong(cardOD);
-        }
-    }
 }
