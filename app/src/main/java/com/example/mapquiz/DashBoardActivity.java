@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
-import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,8 +29,8 @@ import java.util.Random;
 public class DashBoardActivity extends AppCompatActivity {
 
     CountDownTimer countDownTimer;
-    int timervalue = 20;
-    IconRoundCornerProgressBar progressBar;
+    int timervalue = 60;
+    RoundCornerProgressBar progressBar;
     TextView card_question, optionA, optionB, optionC, optionD;
     CardView cardOA, cardOB, cardOC, cardOD;
     int index = 0;
@@ -59,7 +59,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
         setAllData();
 
-        countDownTimer = new CountDownTimer(20000, 1000) {
+        countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timervalue = timervalue - 1;
@@ -74,7 +74,9 @@ public class DashBoardActivity extends AppCompatActivity {
                 dialog.findViewById(R.id.try_again).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(DashBoardActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(DashBoardActivity.this, WonActivity.class);
+                        intent.putExtra("Correct", correctCount);
+                        intent.putExtra("Wrong", wrongCount);
                         startActivity(intent);
                     }
                 });
@@ -115,7 +117,7 @@ public class DashBoardActivity extends AppCompatActivity {
         questions = new ArrayList<>();
         random = new Random();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < countries.size(); i++) {
             Question question = new Question();
             question.setOpA(countries.get(random.nextInt(countries.size())));
             question.setOpB(countries.get(random.nextInt(countries.size())));
@@ -167,8 +169,6 @@ public class DashBoardActivity extends AppCompatActivity {
                     setAllData();
                     enableButton();
                     nextBtn.setClickable(false);
-                }else{
-                    gameWon();
                 }
             }
         });
@@ -201,12 +201,6 @@ public class DashBoardActivity extends AppCompatActivity {
         setCorrect();
     }
 
-    private void gameWon() {
-        Intent intent = new Intent(DashBoardActivity.this, WonActivity.class);
-        intent.putExtra("Correct", correctCount);
-        intent.putExtra("Wrong", wrongCount);
-        startActivity(intent);
-    }
 
     public void enableButton() {
         cardOA.setClickable(true);

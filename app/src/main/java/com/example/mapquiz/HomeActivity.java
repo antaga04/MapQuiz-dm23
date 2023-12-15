@@ -2,6 +2,7 @@ package com.example.mapquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -60,8 +61,17 @@ public class HomeActivity extends AppCompatActivity {
         playGame4Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, DashBoardActivity.class);
-                startActivity(intent);
+                Dialog dialog = new Dialog(HomeActivity.this);
+                dialog.setContentView(R.layout.info_dialog);
+
+                dialog.findViewById(R.id.start_quiz).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(HomeActivity.this, DashBoardActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                dialog.show();
             }
         });
     }
