@@ -1,5 +1,7 @@
 package com.example.mapquiz;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 import android.view.View;
@@ -63,8 +67,31 @@ public class CountryListActivity extends AppCompatActivity {
         // Set up region filter
         setupRegionFilter();
 
-        // Set up country list
-        countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getCountryNames());
+        // Set up country
+        countryAdapter = new ArrayAdapter(this, R.layout.list_item_country, R.id.countryNameTextView, getCountryNames()) {
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+
+            ImageView flagImageView = view.findViewById(R.id.flagImageView);
+            TextView countryNameTextView = view.findViewById(R.id.countryNameTextView);
+
+            // Obtener la posición actual del país en la lista filtrada
+            Country currentCountry = filteredCountryList.get(position);
+
+            // Cargar la imagen de la bandera utilizando Glide
+            Glide.with(CountryListActivity.this)
+                .load(currentCountry.getFlagUrl())
+                .into(flagImageView);
+
+            // Establecer el nombre del país en el TextView
+            countryNameTextView.setText(currentCountry.getName());
+
+            return view;
+        }
+    };
+
         countryListView.setAdapter(countryAdapter);
 
         // Handle item click
