@@ -14,35 +14,36 @@
         android:layout_gravity="center"
         android:gravity="center">
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/vector_info"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Te quedaste \nsin tiempo..."
+            android:text="Tienes 60 segundos para realizar el Quiz\nMucha Suerte!!!"
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="20dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="7dp"/>
 
-        <ImageView
-            android:layout_marginTop="20dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/baseline_timer_24"/>
 
         <LinearLayout
-            android:id="@+id/try_again"
+            android:id="@+id/start_quiz"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginTop="7dp"
             android:gravity="center"
             android:background="@drawable/timeout_btn_shape">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver resultados"
+                android:text="Empezar el Juego"
                 android:textColor="@color/white"
                 android:gravity="center"/>
 

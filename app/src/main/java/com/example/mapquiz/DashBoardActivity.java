@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
-import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,9 +31,10 @@ import java.util.Random;
 public class DashBoardActivity extends AppCompatActivity {
 
     CountDownTimer countDownTimer;
-    int timervalue = 20;
-    IconRoundCornerProgressBar progressBar;
-    TextView card_question, optionA, optionB, optionC, optionD;
+    int timervalue = 60;
+    RoundCornerProgressBar progressBar;
+    TextView optionA, optionB, optionC, optionD;
+    ImageView card_question;
     CardView cardOA, cardOB, cardOC, cardOD;
     int index = 0;
     int correctCount = 0;
@@ -41,6 +44,7 @@ public class DashBoardActivity extends AppCompatActivity {
     List<Country> countries;
     Question Q1;
     Random random;
+    String urlflag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
         setAllData();
 
-        countDownTimer = new CountDownTimer(20000, 1000) {
+        countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timervalue = timervalue - 1;
@@ -74,7 +78,9 @@ public class DashBoardActivity extends AppCompatActivity {
                 dialog.findViewById(R.id.try_again).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(DashBoardActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(DashBoardActivity.this, WonActivity.class);
+                        intent.putExtra("Correct", correctCount);
+                        intent.putExtra("Wrong", wrongCount);
                         startActivity(intent);
                     }
                 });
@@ -115,7 +121,7 @@ public class DashBoardActivity extends AppCompatActivity {
         questions = new ArrayList<>();
         random = new Random();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < countries.size(); i++) {
             Question question = new Question();
             question.setOpA(countries.get(random.nextInt(countries.size())));
             question.setOpB(countries.get(random.nextInt(countries.size())));
@@ -127,8 +133,8 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
     private void setAllData() {
-
-        card_question.setText(Q1.getRandomOption().getFlagUrl());
+        urlflag = Q1.getRandomOption().getFlagUrl();
+        Picasso.get().load(urlflag).into(card_question);
         optionA.setText(Q1.getOpA().getName());
         optionB.setText(Q1.getOpB().getName());
         optionC.setText(Q1.getOpC().getName());
@@ -167,8 +173,6 @@ public class DashBoardActivity extends AppCompatActivity {
                     setAllData();
                     enableButton();
                     nextBtn.setClickable(false);
-                }else{
-                    gameWon();
                 }
             }
         });
@@ -191,7 +195,7 @@ public class DashBoardActivity extends AppCompatActivity {
         disableButton();
         nextBtn.setClickable(true);
 
-        if (selectedOption.getFlagUrl().equals(card_question.getText().toString())) {
+        if (selectedOption.getFlagUrl().equals(urlflag)) {
             cardView.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
             correctCount++;
         } else {
@@ -201,12 +205,6 @@ public class DashBoardActivity extends AppCompatActivity {
         setCorrect();
     }
 
-    private void gameWon() {
-        Intent intent = new Intent(DashBoardActivity.this, WonActivity.class);
-        intent.putExtra("Correct", correctCount);
-        intent.putExtra("Wrong", wrongCount);
-        startActivity(intent);
-    }
 
     public void enableButton() {
         cardOA.setClickable(true);

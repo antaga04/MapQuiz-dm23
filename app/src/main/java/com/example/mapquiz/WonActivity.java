@@ -24,13 +24,15 @@ public class WonActivity extends AppCompatActivity {
 
         correct=getIntent().getIntExtra("Correct",0);
         wrong=getIntent().getIntExtra("Wrong",0);
+        int max = correct+wrong;
 
         resultText = findViewById(R.id.resultText);
 
         CircularProgressBar circularProgressBar = findViewById(R.id.mycircularProgressBar);
+        circularProgressBar.setProgressMax(max);
         circularProgressBar.setProgressWithAnimation((float) correct, 1000L);
 
-        resultText.setText(correct+"/5");
+        resultText.setText(correct+"/"+(max));
 
         btnShare=findViewById(R.id.btnShare);
 
