@@ -12,4 +12,11 @@
     <color name="primary_quiz">#003366</color>
     <color name="next_button_color">#3297ca</color>
     <color name="red">#ff6666</color>
+
+    //Paleta de la aplicación
+    <color name="paleta1">#22577A</color>
+    <color name="paleta2">#38A3A5</color>
+    <color name="paleta3">#57CC99</color>
+    <color name="paleta4">#80ED99</color>
+    <color name="paleta5">#C7F9CC</color>
 </resources>
