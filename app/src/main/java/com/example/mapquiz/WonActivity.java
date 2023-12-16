@@ -3,6 +3,7 @@ package com.example.mapquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ public class WonActivity extends AppCompatActivity {
 
     TextView resultText;
     int correct,wrong;
-    LinearLayout btnShare;
+    Button btnShare;
     public static final String LIBRARY_PACKAGE_NAME = "com.example.prueba2";
 
     @Override

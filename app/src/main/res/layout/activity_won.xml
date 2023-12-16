@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_quiz"
+    android:background="@color/paleta3"
     tools:context=".WonActivity">
 
     <RelativeLayout
@@ -36,32 +36,24 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/rl2"
         android:layout_marginTop="30dp">
-
-        <LinearLayout
+        <Button
             android:id="@+id/btnShare"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:background="@drawable/shareshape"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Share Your Score"
-                android:textColor="@color/white"
-                android:textSize="18dp" />
-        </LinearLayout>
-
-    </RelativeLayout>
+            android:text="Share Your Score"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:backgroundTint="@color/paleta5">
+        </Button>
+    </LinearLayout>
 
 
 </RelativeLayout>

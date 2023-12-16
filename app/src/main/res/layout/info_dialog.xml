@@ -1,57 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
-    android:layout_height="200dp"
+    android:layout_width="300dp"
+    android:layout_height="270dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
-    app:cardBackgroundColor="#ff9999"
+    app:cardBackgroundColor="@color/paleta3"
     android:layout_gravity="center"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        >
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/vector_info"/>
+            android:background="@drawable/vector_info" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
             android:text="Tienes 60 segundos para realizar el Quiz\nMucha Suerte!!!"
             android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:layout_marginTop="7dp"/>
+            android:textSize="20sp" />
 
-
-        <LinearLayout
+        <Button
             android:id="@+id/start_quiz"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:layout_marginStart="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="7dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:background="@drawable/timeout_btn_shape">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Empezar el Juego"
-                android:textColor="@color/white"
-                android:gravity="center"/>
-
-        </LinearLayout>
-
+            android:text="Empezar el Juego"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:backgroundTint="@color/paleta5">
+        </Button>
 
     </LinearLayout>
-
 
 
 </androidx.cardview.widget.CardView>

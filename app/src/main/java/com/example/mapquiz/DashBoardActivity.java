@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -35,11 +36,10 @@ public class DashBoardActivity extends AppCompatActivity {
     RoundCornerProgressBar progressBar;
     TextView optionA, optionB, optionC, optionD;
     ImageView card_question;
-    CardView cardOA, cardOB, cardOC, cardOD;
+    CardView cardOA, cardOB, cardOC, cardOD, nextBtn;
     int index = 0;
     int correctCount = 0;
     int wrongCount = 0;
-    LinearLayout nextBtn;
     List<Question> questions;
     List<Country> countries;
     Question Q1;
@@ -58,7 +58,6 @@ public class DashBoardActivity extends AppCompatActivity {
 
         Collections.shuffle(questions);
         Q1 = questions.get(index);
-
         nextBtn.setClickable(false);
 
         setAllData();
@@ -74,7 +73,7 @@ public class DashBoardActivity extends AppCompatActivity {
             public void onFinish() {
                 Dialog dialog = new Dialog(DashBoardActivity.this);
                 dialog.setContentView(R.layout.time_out_dialog);
-
+                dialog.setCancelable(false);
                 dialog.findViewById(R.id.try_again).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -120,13 +119,19 @@ public class DashBoardActivity extends AppCompatActivity {
     private void loadQuestions() {
         questions = new ArrayList<>();
         random = new Random();
-
         for (int i = 0; i < countries.size(); i++) {
+            List<Integer> difQuestions = new ArrayList<>();
+            while (difQuestions.size() < 4) {
+                int newIndex = random.nextInt(countries.size());
+                if (!difQuestions.contains(newIndex)) {
+                    difQuestions.add(newIndex);
+                }
+            }
             Question question = new Question();
-            question.setOpA(countries.get(random.nextInt(countries.size())));
-            question.setOpB(countries.get(random.nextInt(countries.size())));
-            question.setOpC(countries.get(random.nextInt(countries.size())));
-            question.setOpD(countries.get(random.nextInt(countries.size())));
+            question.setOpA(countries.get(difQuestions.get(0)));
+            question.setOpB(countries.get(difQuestions.get(1)));
+            question.setOpC(countries.get(difQuestions.get(2)));
+            question.setOpD(countries.get(difQuestions.get(3)));
 
             questions.add(question);
         }
@@ -139,11 +144,6 @@ public class DashBoardActivity extends AppCompatActivity {
         optionB.setText(Q1.getOpB().getName());
         optionC.setText(Q1.getOpC().getName());
         optionD.setText(Q1.getOpD().getName());
-
-/*      timervalue = 20;
-        countDownTimer.cancel();
-        countDownTimer.start();
- */
     }
 
     private void findIds() {
@@ -196,10 +196,10 @@ public class DashBoardActivity extends AppCompatActivity {
         nextBtn.setClickable(true);
 
         if (selectedOption.getFlagUrl().equals(urlflag)) {
-            cardView.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
+            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
             correctCount++;
         } else {
-            cardView.setBackgroundColor(ContextCompat.getColor(this, R.color.red));
+            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.red));
             wrongCount++;
         }
         setCorrect();
@@ -221,10 +221,10 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
     public void resetColor() {
-        cardOA.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-        cardOB.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-        cardOC.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-        cardOD.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+        cardOA.setCardBackgroundColor(ContextCompat.getColor(this, R.color.paleta5));
+        cardOB.setCardBackgroundColor(ContextCompat.getColor(this, R.color.paleta5));
+        cardOC.setCardBackgroundColor(ContextCompat.getColor(this, R.color.paleta5));
+        cardOD.setCardBackgroundColor(ContextCompat.getColor(this, R.color.paleta5));
     }
 
 }
