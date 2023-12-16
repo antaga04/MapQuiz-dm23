@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +33,8 @@ public class DashBoardActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     int timervalue = 60;
     RoundCornerProgressBar progressBar;
-    TextView card_question, optionA, optionB, optionC, optionD;
+    TextView optionA, optionB, optionC, optionD;
+    ImageView card_question;
     CardView cardOA, cardOB, cardOC, cardOD;
     int index = 0;
     int correctCount = 0;
@@ -41,6 +44,7 @@ public class DashBoardActivity extends AppCompatActivity {
     List<Country> countries;
     Question Q1;
     Random random;
+    String urlflag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +133,8 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
     private void setAllData() {
-
-        card_question.setText(Q1.getRandomOption().getFlagUrl());
+        urlflag = Q1.getRandomOption().getFlagUrl();
+        Picasso.get().load(urlflag).into(card_question);
         optionA.setText(Q1.getOpA().getName());
         optionB.setText(Q1.getOpB().getName());
         optionC.setText(Q1.getOpC().getName());
@@ -191,7 +195,7 @@ public class DashBoardActivity extends AppCompatActivity {
         disableButton();
         nextBtn.setClickable(true);
 
-        if (selectedOption.getFlagUrl().equals(card_question.getText().toString())) {
+        if (selectedOption.getFlagUrl().equals(urlflag)) {
             cardView.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
             correctCount++;
         } else {
