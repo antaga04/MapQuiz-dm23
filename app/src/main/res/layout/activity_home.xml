@@ -3,27 +3,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#997F71AA">
+    android:background="@color/paleta5">
+
+    <!-- Logo Image -->
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/mapquiz"/>
+
+    <ImageButton
+        android:id="@+id/playGame4Btn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/app_logo"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="18dp"
+        android:backgroundTint="@color/paleta3"
+        android:contentDescription="play button"
+        android:src="@android:drawable/ic_media_play" />
+
+    <!-- Game -->
+
+    <LinearLayout
+        android:id="@+id/listLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/playGame4Btn"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:paddingStart="28dp">
+
+        <TextView
+            android:id="@+id/itemText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/paleta1"
+            android:text="Flag - Country"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/itemDescription4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/paleta1"
+                android:textSize="20dp"
+                android:layout_below="@id/itemText4"
+                android:text="Guess the country given a flag" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/study_btn"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listLayout"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="18dp"
+        android:backgroundTint="@color/paleta3"
+        android:text="Study"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <!-- Hello Nickname and ImageButton -->
     <RelativeLayout
-        android:id="@+id/topLayout"
+        android:id="@+id/profileAndRankingLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/study_btn"
         android:gravity="center_vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textHello"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+        <ImageButton
+            android:id="@+id/ranking_btn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="22dp"
-            android:text="Hello Nickname"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="112dp"
+            android:layout_marginBottom="22dp"
+            android:background="@drawable/ic_4"
+            android:backgroundTint="@color/paleta1" />
 
         <ImageButton
             android:id="@+id/profile_btn"
@@ -33,218 +101,13 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="22dp"
             android:layout_marginTop="22dp"
-            android:layout_marginEnd="22dp"
+            android:layout_marginEnd="223dp"
             android:layout_marginBottom="22dp"
             android:background="@drawable/name"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/paleta1"
             android:contentDescription="@string/profile"
             tools:ignore="TouchTargetSizeCheck" />
 
     </RelativeLayout>
-
-    <!-- Games Available -->
-
-    <TextView
-        android:id="@+id/textGamesAvailable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topLayout"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Games Available"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <!-- List of Rectangles -->
-
-    <LinearLayout
-        android:id="@+id/listLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textGamesAvailable"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:paddingStart="28dp">
-
-        <!-- Item 1 -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/itemButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/primary"
-                android:contentDescription="play button"
-                android:src="@android:drawable/ic_media_play" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/itemButton1">
-
-                <TextView
-                    android:id="@+id/itemText1"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Flag"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/itemDescription1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText1"
-                    android:text="Guess the flag given a country" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-        <!-- Item 2 -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/itemButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/salem"
-                android:contentDescription="play button"
-                android:src="@android:drawable/ic_media_play" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/itemButton2">
-
-                <TextView
-                    android:id="@+id/itemText2"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Country Flag"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/itemDescription2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText2"
-                    android:text="Guess the county given a flag" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-        <!-- Item 3 -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/itemButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/koromiko"
-                android:contentDescription="play button"
-                android:src="@android:drawable/ic_media_play" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/itemButton3">
-
-                <TextView
-                    android:id="@+id/itemText3"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Capital"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/itemDescription3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText3"
-                    android:text="Guess the capital given a country" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-        <!-- Item 4 -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/playGame4Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:contentDescription="play button"
-                android:src="@android:drawable/ic_media_play" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/playGame4Btn">
-
-                <TextView
-                    android:id="@+id/itemText4"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Country Capital"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/itemDescription4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText4"
-                    android:text="Guess the country given a capital" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/study_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/listLayout"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="18dp"
-        android:backgroundTint="@color/secondary"
-        android:text="Study"
-        android:textSize="20dp"
-        android:textStyle="bold" />
 
 </RelativeLayout>

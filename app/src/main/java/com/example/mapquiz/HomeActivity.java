@@ -18,7 +18,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
     ImageButton profile_btn, playGame4Btn;
-    Button study_btn;
+    Button study_btn, ranking_btn;
     TextView helloText;
 
     @Override
@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         playGame4Btn = findViewById(R.id.playGame4Btn);
 
         user = auth.getCurrentUser();
-        helloText = findViewById(R.id.textHello);
+        //helloText = findViewById(R.id.textHello);
 
         if (user == null) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -46,6 +46,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ranking_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, RankingActivity.class);
                 startActivity(intent);
             }
         });
