@@ -27,7 +27,7 @@
             android:layout_marginTop="7dp"
             android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="Tienes 60 segundos para realizar el Quiz\nMucha Suerte!!!"
+            android:text="You have 60 seconds to take the Quiz\nGood luck!!!"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -39,7 +39,7 @@
             android:layout_marginTop="7dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:text="Empezar el Juego"
+            android:text="Start the Game"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:backgroundTint="@color/paleta5">
