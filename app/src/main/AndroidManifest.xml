@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MapQuiz"
         tools:targetApi="31">
-
+        <activity
+            android:name=".RankingActivity"
+            android:exported="false" />
         <activity
             android:name=".WonActivity"
             android:exported="false">
@@ -24,13 +27,13 @@
         <activity
             android:name=".DashBoardActivity"
             android:exported="false">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".CountryListActivity"
+            android:exported="false"
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,6 +41,7 @@
         </activity>
         <activity
             android:name=".CountryDetailsActivity"
+            android:exported="false"
             android:parentActivityName=".CountryListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

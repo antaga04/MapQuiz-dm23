@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/paleta3"
     tools:context=".DashBoardActivity">
 
@@ -11,45 +11,45 @@
         android:id="@+id/quiz_timer"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        app:rcBackgroundColor="@color/paleta2"
         android:layout_marginTop="1dp"
+        app:rcBackgroundColor="@color/paleta2"
         app:rcBackgroundPadding="2dp"
         app:rcMax="60"
         app:rcProgress="60"
-        app:rcSecondaryProgress="60"
         app:rcProgressColor="@color/paleta1"
+        app:rcSecondaryProgress="60"
         app:rcSecondaryProgressColor="@color/paleta2" />
+
     <LinearLayout
         android:id="@+id/layout_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/quiz_timer">
+        android:layout_below="@id/quiz_timer"
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/paleta5"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="200dp"
             android:layout_marginStart="7dp"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="7dp"
             android:layout_marginRight="7dp"
-            app:cardCornerRadius="10dp"
-            android:background="@color/paleta1">
+            android:background="@color/paleta1"
+            app:cardBackgroundColor="@color/paleta5"
+            app:cardCornerRadius="10dp">
 
             <ImageView
                 android:id="@+id/card_question"
-                android:layout_width="225dp"
-                android:layout_height="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:scaleType="centerCrop"/>
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop" />
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/paleta5"
-            android:onClick="OptionClick"
             android:id="@+id/cardA"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -58,6 +58,8 @@
             android:layout_marginTop="90dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:onClick="OptionClick"
+            app:cardBackgroundColor="@color/paleta5"
             app:cardCornerRadius="10dp">
 
             <TextView
@@ -65,14 +67,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="A"/>
+                android:text="A"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/paleta5"
-            android:onClick="OptionClick"
             android:id="@+id/cardB"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -81,6 +83,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:onClick="OptionClick"
+            app:cardBackgroundColor="@color/paleta5"
             app:cardCornerRadius="10dp">
 
             <TextView
@@ -88,14 +92,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="B"/>
+                android:text="B"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/paleta5"
-            android:onClick="OptionClick"
             android:id="@+id/cardC"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -104,6 +108,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:onClick="OptionClick"
+            app:cardBackgroundColor="@color/paleta5"
             app:cardCornerRadius="10dp">
 
             <TextView
@@ -111,14 +117,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="C"/>
+                android:text="C"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/paleta5"
-            android:onClick="OptionClick"
             android:id="@+id/cardD"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -127,6 +133,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:onClick="OptionClick"
+            app:cardBackgroundColor="@color/paleta5"
             app:cardCornerRadius="10dp">
 
             <TextView
@@ -134,39 +142,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="D"/>
+                android:text="D"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
 
         </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/layout_question">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/nextBtn"
-            app:cardBackgroundColor="@color/paleta5"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/paleta5"
-            android:layout_marginStart="35dp"
-            android:layout_marginEnd="35dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="NEXT"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textAllCaps="true"/>
-
-        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </RelativeLayout>

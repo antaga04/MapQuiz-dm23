@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,7 +37,7 @@ public class DashBoardActivity extends AppCompatActivity {
     RoundCornerProgressBar progressBar;
     TextView optionA, optionB, optionC, optionD;
     ImageView card_question;
-    CardView cardOA, cardOB, cardOC, cardOD, nextBtn;
+    CardView cardOA, cardOB, cardOC, cardOD;
     int index = 0;
     int correctCount = 0;
     int wrongCount = 0;
@@ -58,11 +59,10 @@ public class DashBoardActivity extends AppCompatActivity {
 
         Collections.shuffle(questions);
         Q1 = questions.get(index);
-        nextBtn.setClickable(false);
 
         setAllData();
 
-        countDownTimer = new CountDownTimer(60000, 1000) {
+        countDownTimer = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timervalue = timervalue - 1;
@@ -102,7 +102,7 @@ public class DashBoardActivity extends AppCompatActivity {
             String json = new String(buffer);
 
             // Print JSON content to log (for debugging purposes)
-            Log.d("JSON_CONTENT", json);
+//            Log.d("JSON_CONTENT", json);
 
             // Parse JSON array
             JSONArray jsonArray = new JSONArray(json);
@@ -116,6 +116,7 @@ public class DashBoardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void loadQuestions() {
         questions = new ArrayList<>();
         random = new Random();
@@ -159,24 +160,23 @@ public class DashBoardActivity extends AppCompatActivity {
         cardOB = findViewById(R.id.cardB);
         cardOC = findViewById(R.id.cardC);
         cardOD = findViewById(R.id.cardD);
-
-        nextBtn = findViewById(R.id.nextBtn);
     }
-    public void setCorrect(){
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+
+    public void setCorrect() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-                if (index < questions.size()-1){
+            public void run() {
+                if (index < questions.size() - 1) {
                     index++;
                     Q1 = questions.get(index);
                     resetColor();
                     setAllData();
                     enableButton();
-                    nextBtn.setClickable(false);
                 }
             }
-        });
+        }, 400);
     }
+
 
     public void OptionClick(View view) {
         int viewId = view.getId();
@@ -191,9 +191,9 @@ public class DashBoardActivity extends AppCompatActivity {
             handleOptionClick(Q1.getOpD(), cardOD);
         }
     }
+
     public void handleOptionClick(Country selectedOption, CardView cardView) {
         disableButton();
-        nextBtn.setClickable(true);
 
         if (selectedOption.getFlagUrl().equals(urlflag)) {
             cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));

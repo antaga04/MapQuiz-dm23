@@ -9,8 +9,11 @@
     <string name="logout">LOGOUT</string>
     <string name="profile">Profile</string>
     <string name="google">Google</string>
-    <string name="name">Enter Name</string>
+    <string name="name">Enter Nickname</string>
     <string name="restore_password">Forgot your password? Restore it.</string>
     <string name="enviar">Enviar</string>
     <string name="emailText">Email</string>
+    <string name="default_web_client_id">969290177463-euaine3fkb8ufgg22o093p4l1nv4j6bg.apps.googleusercontent.com</string>
+    <string name="ranking_button">Ranking button</string>
+    <string name="game_explanation">Guess the country given a flag</string>
 </resources>

@@ -12,15 +12,14 @@
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:src="@drawable/mapquiz"/>
+        android:src="@drawable/mapquiz" />
 
     <ImageButton
         android:id="@+id/playGame4Btn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_below="@+id/app_logo"
         android:layout_centerInParent="true"
-        android:layout_marginTop="18dp"
         android:backgroundTint="@color/paleta3"
         android:contentDescription="play button"
         android:src="@android:drawable/ic_media_play" />
@@ -32,36 +31,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/playGame4Btn"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:paddingStart="28dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/itemText4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/paleta1"
             android:text="Flag - Country"
+            android:textColor="@color/paleta1"
             android:textSize="30dp"
             android:textStyle="bold" />
 
         <TextView
-                android:id="@+id/itemDescription4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/paleta1"
-                android:textSize="20dp"
-                android:layout_below="@id/itemText4"
-                android:text="Guess the country given a flag" />
+            android:id="@+id/itemDescription4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemText4"
+            android:layout_gravity="center"
+            android:text="@string/game_explanation"
+            android:textColor="@color/paleta1"
+            android:textSize="20dp" />
     </LinearLayout>
 
     <Button
         android:id="@+id/study_btn"
-        android:layout_width="300dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/listLayout"
         android:layout_centerInParent="true"
@@ -82,8 +79,8 @@
 
         <ImageButton
             android:id="@+id/ranking_btn"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="22dp"
@@ -91,12 +88,14 @@
             android:layout_marginEnd="112dp"
             android:layout_marginBottom="22dp"
             android:background="@drawable/ic_4"
-            android:backgroundTint="@color/paleta1" />
+            android:backgroundTint="@color/paleta1"
+            android:contentDescription="@string/ranking_button"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/profile_btn"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="22dp"
