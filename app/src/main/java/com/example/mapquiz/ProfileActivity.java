@@ -1,19 +1,15 @@
 package com.example.mapquiz;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -21,10 +17,10 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private Button logoutBtn, confirmChangesBtn;
     private FirebaseUser user;
-    private ImageButton editNameBtn, editPasswordBtn;
-    private EditText editTextName, editTextPassword, editTextEmail;
+    private Button logoutBtn, confirmChangesBtn;
+    private ImageButton editNameBtn, editPasswordBtn, editCountryBtn;
+    private EditText editTextName, editTextPassword, editTextEmail, editTextCountry;
 
     private String originalName;
 
@@ -33,19 +29,44 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        initializeViews();
+        setActionBar();
+        setOnClickListeners();
+        setUserDetails();
 
+        disableEditTexts();
+    }
+
+    private void initializeViews() {
         auth = FirebaseAuth.getInstance();
         logoutBtn = findViewById(R.id.logout);
         editNameBtn = findViewById(R.id.imageButtonEditName);
         editPasswordBtn = findViewById(R.id.imageButtonEditPassword);
+        editCountryBtn = findViewById(R.id.imageButtonEditCountry);
         confirmChangesBtn = findViewById(R.id.buttonConfirmChanges);
         editTextName = findViewById(R.id.editTextName);
         editTextEmail = findViewById(R.id.editTextEmail);
+        editTextCountry = findViewById(R.id.editTextCountry);
         editTextPassword = findViewById(R.id.editTextPassword);
+    }
 
+    private void setActionBar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void setOnClickListeners() {
+        editNameBtn.setOnClickListener(v -> enableEditText(editTextName));
+        editPasswordBtn.setOnClickListener(v -> enableEditText(editTextPassword));
+        editCountryBtn.setOnClickListener(v -> enableEditText(editTextCountry));
+        setOnFocusChangeListener(editTextName);
+        setOnFocusChangeListener(editTextPassword);
+        confirmChangesBtn.setOnClickListener(v -> confirmChanges());
+        logoutBtn.setOnClickListener(v -> logout());
+    }
+
+    private void setUserDetails() {
         user = auth.getCurrentUser();
 
         if (user == null) {
@@ -55,26 +76,13 @@ public class ProfileActivity extends AppCompatActivity {
             editTextEmail.setHint(user.getEmail());
             originalName = user.getDisplayName();
             editTextName.setHint(originalName);
+            // Lógica para obtener y mostrar el country desde la base de datos
         }
+    }
 
-        editTextName.setBackgroundResource(R.drawable.edit_text_border);
-        editTextPassword.setBackgroundResource(R.drawable.edit_text_border);
-
-//        editTextEmail.setEnabled(false);
-        editTextName.setEnabled(false);
-        editTextPassword.setEnabled(false);
-
-        editNameBtn.setOnClickListener(v -> enableEditText(editTextName));
-
-        editPasswordBtn.setOnClickListener(v -> enableEditText(editTextPassword));
-
-//        setOnFocusChangeListener(editTextEmail);
-        setOnFocusChangeListener(editTextName);
-        setOnFocusChangeListener(editTextPassword);
-
-        confirmChangesBtn.setOnClickListener(v -> confirmChanges());
-
-        logoutBtn.setOnClickListener(v -> logout());
+    private void disableEditTexts() {
+        disableEditText(editTextName);
+        disableEditText(editTextPassword);
     }
 
     private void setOnFocusChangeListener(EditText editText) {
@@ -106,8 +114,8 @@ public class ProfileActivity extends AppCompatActivity {
             user.updateProfile(profileUpdates).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     originalName = name;
-                    Toast.makeText(ProfileActivity.this, "Name successfully updated!", Toast.LENGTH_SHORT).show();
-                    checkUserSession(); // Verifica la sesión después de actualizar el nombre
+                    showToast("Name successfully updated!");
+                    checkUserSession();
                 }
             });
         }
@@ -115,30 +123,32 @@ public class ProfileActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(newPassword)) {
             user.updatePassword(newPassword).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(ProfileActivity.this, "Password successfully updated!", Toast.LENGTH_SHORT).show();
-                    checkUserSession(); // Verifica la sesión después de actualizar la contraseña
+                    showToast("Password successfully updated!");
+                    checkUserSession();
                 }
             });
         }
     }
 
     private void checkUserSession() {
-        // Verifica si el usuario aún está autenticado
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser == null) {
-            // Si no está autenticado, redirige a la pantalla de inicio de sesión
-            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+            navigateToLogin();
         }
     }
 
-// ... (código posterior)
-
+    private void navigateToLogin() {
+        Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     private void logout() {
         auth.signOut();
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
+        navigateToLogin();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -52,45 +52,46 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        progressBar.setVisibility(View.VISIBLE);
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
+        String country = editTextCountry.getText().toString().trim();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(name) || TextUtils.isEmpty(country)) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (!isValidEmail(email)) {
+            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateProfile(user, name, email);
-                        Toast.makeText(RegisterActivity.this, "Authentication successful.", Toast.LENGTH_SHORT).show();
+                        User userObj = new User(name, country, email, 0);
+                        updateProfile(user, userObj);
                     } else {
                         Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Error creating user: " + task.getException().getMessage()); // Agrega este log para ver detalles del error
+                        Log.e(TAG, "Error creating user: " + task.getException().getMessage());
                     }
                 });
     }
 
-    private void updateProfile(FirebaseUser user, String name, String email) {
+    private void updateProfile(FirebaseUser user, User userObj) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
+                .setDisplayName(userObj.getName())
                 .build();
 
         user.updateProfile(profileUpdates)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Escribe los datos del usuario en la base de datos
-                        writeUserDataToDatabase(user.getUid(), name, email);
-                        Toast.makeText(RegisterActivity.this, "Account created.", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                        writeUserDataToDatabase(user.getUid(), userObj);
                     } else {
                         Toast.makeText(RegisterActivity.this, "Failed to create user profile.", Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "Error updating profile: " + task.getException().getMessage());
@@ -98,18 +99,19 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void writeUserDataToDatabase(String userId, String name, String email) {
+    private void writeUserDataToDatabase(String userId, User userObj) {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://mapquiz-dm23-default-rtdb.firebaseio.com/");
         DatabaseReference usersRef = database.getReference("users");
-
-        Log.d("USER_UID", userId);
-        Log.d("USER_NAME", name);
-        Log.d("USER_EMAIL", email);
-
-        // Crea un nuevo nodo con la ID de usuario y escribe los datos
         DatabaseReference userNodeRef = usersRef.child(userId);
-        userNodeRef.child("name").setValue(name);
-        userNodeRef.child("email").setValue(email);
+        userNodeRef.setValue(userObj);
+
+        Toast.makeText(RegisterActivity.this, "Account created.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
+    private boolean isValidEmail(CharSequence target) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
 }

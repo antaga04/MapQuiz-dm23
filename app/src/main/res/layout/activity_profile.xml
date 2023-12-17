@@ -24,6 +24,7 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <!-- Campo Email -->
         <LinearLayout
             android:id="@+id/layoutEmail"
             android:layout_width="match_parent"
@@ -49,13 +50,6 @@
                 android:hint="johndoe@example.com"
                 android:inputType="text"
                 android:minHeight="48dp" />
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/imageButtonEditEmail"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:contentDescription="Edit Name"-->
-<!--                android:src="@android:drawable/ic_menu_edit" />-->
 
         </LinearLayout>
         <!-- Campo Name -->
@@ -94,7 +88,7 @@
 
         </LinearLayout>
 
-        <!-- Campo Password (similar a Name) -->
+        <!-- Campo Password -->
         <LinearLayout
             android:id="@+id/layoutPassword"
             android:layout_width="match_parent"
@@ -125,16 +119,52 @@
                 android:id="@+id/imageButtonEditPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="Edit Name"
+                android:contentDescription="Edit Password"
                 android:src="@android:drawable/ic_menu_edit" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutPassword"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Country:"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextCountry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:hint="Country"
+                android:inputType="textPassword"
+                android:minHeight="48dp" />
+
+            <ImageButton
+                android:id="@+id/imageButtonEditCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Edit Country"
+                android:src="@android:drawable/ic_menu_edit" />
+
+        </LinearLayout>
+
         <!-- Botón para confirmar cambios -->
         <Button
             android:id="@+id/buttonConfirmChanges"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layoutPassword"
+            android:layout_below="@id/layoutCountry"
             android:layout_marginTop="18dp"
             android:backgroundTint="@color/green"
             android:text="Confirm Changes"
@@ -155,10 +185,10 @@
         android:id="@+id/profile_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:elevation="-1dp"
         android:rotation="180"
         android:src="@drawable/top_background1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:elevation="-1dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

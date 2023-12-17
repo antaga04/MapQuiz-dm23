@@ -38,18 +38,36 @@
 
     <LinearLayout
         android:id="@+id/shareLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_below="@+id/rl2"
+        android:layout_centerInParent="true"
         android:layout_marginTop="30dp">
         <Button
             android:id="@+id/btnShare"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
             android:text="Share Your Score"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:backgroundTint="@color/paleta5">
+        </Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/uploadScore"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/shareLayout"
+        android:layout_marginTop="10dp"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnAddScore"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Upload Score"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:backgroundTint="@color/paleta5">
@@ -59,16 +77,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_below="@+id/shareLayout"
-        android:layout_marginTop="10dp">
+        android:layout_below="@+id/uploadScore"
+        android:layout_marginTop="10dp"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
         <Button
-            android:id="@+id/btnAddScore"
-            android:layout_width="match_parent"
+            android:id="@+id/btnPlayAgain"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:text="Upload Score"
+            android:text="Play Again"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:backgroundTint="@color/paleta5">

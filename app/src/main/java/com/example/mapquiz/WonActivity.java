@@ -1,5 +1,6 @@
 package com.example.mapquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -30,7 +32,7 @@ public class WonActivity extends AppCompatActivity {
     String actualDate = dateFormat.format(calendar.getTime());
     TextView resultText;
     int correct, wrong;
-    Button btnShare, scoreButton;
+    Button btnShare, scoreButton, btnPlayAgain;
     public static final String LIBRARY_PACKAGE_NAME = "com.example.mapquiz";
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -56,52 +58,59 @@ public class WonActivity extends AppCompatActivity {
         resultText.setText(correct + "/" + (max));
 
         btnShare = findViewById(R.id.btnShare);
-
-        // score database
         scoreButton = findViewById(R.id.btnAddScore);
+        btnPlayAgain = findViewById(R.id.btnPlayAgain);
+        btnPlayAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WonActivity.this, DashBoardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         scoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                insertData();
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://mapquiz-dm23-default-rtdb.firebaseio.com/");
-                DatabaseReference myRef = database.getReference("ranking");
+                DatabaseReference userRef = database.getReference("users").child(user.getUid());
 
-                String game = "FlagCountry";
-                int score = correct;
-                String uId = user.getUid();
-                String date = actualDate;
-
-                Score scoreObj = new Score(game, score, date);
-                myRef.child(uId).setValue(scoreObj).addOnCompleteListener(new OnCompleteListener<Void>() {
+                // Obtener el bestScore actual del usuario
+                userRef.child("bestScore").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(WonActivity.this, "Score uploaded", Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int bestScore = task.getResult().getValue(Integer.class);
+
+                            // Verificar si el nuevo score es mayor que el bestScore actual
+                            if (correct > bestScore) {
+                                // Actualizar el bestScore en la base de datos
+                                userRef.child("bestScore").setValue(correct);
+
+                                // Subir el nuevo score a la tabla de ranking
+                                DatabaseReference rankingRef = database.getReference("ranking");
+                                String game = "FlagCountry";
+                                String uId = user.getUid();
+                                String date = actualDate;
+
+                                Score scoreObj = new Score(game, correct, date);
+                                rankingRef.child(uId).setValue(scoreObj).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(WonActivity.this, "Score uploaded", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                // El nuevo score no es mayor que el bestScore actual
+                                Toast.makeText(WonActivity.this, "Score is not higher than bestScore", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            // Handle error
+                            Toast.makeText(WonActivity.this, "Error getting bestScore", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
         });
-
-    }
-
-    private void insertData() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("name", "Justin");
-        map.put("email", "justin@gmail.com");
-        FirebaseDatabase.getInstance().getReference().child("students").push()
-                .setValue(map)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(WonActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(WonActivity.this, "error", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }
