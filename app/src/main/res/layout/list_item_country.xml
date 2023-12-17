@@ -16,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/flagImageView"
-        android:gravity="center_vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true"
         android:textSize="18sp"/>
 
 </RelativeLayout>

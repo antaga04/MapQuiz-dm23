@@ -3,16 +3,24 @@ package com.example.mapquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -62,6 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         editCountryBtn.setOnClickListener(v -> enableEditText(editTextCountry));
         setOnFocusChangeListener(editTextName);
         setOnFocusChangeListener(editTextPassword);
+        setOnFocusChangeListener(editTextCountry);
         confirmChangesBtn.setOnClickListener(v -> confirmChanges());
         logoutBtn.setOnClickListener(v -> logout());
     }
@@ -73,16 +82,38 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
         } else {
+            // Lógica para obtener y mostrar el country y bestScore desde la base de datos
+            DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+            usersReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String country = dataSnapshot.child("country").getValue(String.class);
+                        int bestScore = dataSnapshot.child("bestScore").getValue(Integer.class);
+
+                        editTextCountry.setHint(country);
+                        // Supongamos que tienes un TextView llamado textViewBestScore para mostrar el bestScore
+                        TextView textViewBestScore = findViewById(R.id.textViewBestScore);
+                        textViewBestScore.setText(String.valueOf(bestScore));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("ProfileActivity", "Error al obtener datos de usuario de Firebase", databaseError.toException());
+                }
+            });
+
             editTextEmail.setHint(user.getEmail());
             originalName = user.getDisplayName();
             editTextName.setHint(originalName);
-            // Lógica para obtener y mostrar el country desde la base de datos
         }
     }
 
     private void disableEditTexts() {
         disableEditText(editTextName);
         disableEditText(editTextPassword);
+        disableEditText(editTextCountry);
     }
 
     private void setOnFocusChangeListener(EditText editText) {
@@ -111,13 +142,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .build();
 
         if (!TextUtils.isEmpty(name) && !name.equals(originalName)) {
-            user.updateProfile(profileUpdates).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    originalName = name;
-                    showToast("Name successfully updated!");
-                    checkUserSession();
-                }
-            });
+            user.updateProfile(profileUpdates);
         }
 
         if (!TextUtils.isEmpty(newPassword)) {
@@ -128,7 +153,36 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
         }
+
+        updateUserDataInDatabase();
+        checkUserSession();
     }
+
+    private void updateUserDataInDatabase() {
+        // Actualizar campos en la base de datos
+        DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+
+        String country = editTextCountry.getText().toString().trim();
+        String name = editTextName.getText().toString().trim();
+
+        if (!TextUtils.isEmpty(country)) {
+            usersReference.child("country").setValue(country).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    showToast("Country successfully updated!");
+                }
+            });
+        }
+
+        if (!TextUtils.isEmpty(name)) {
+            usersReference.child("name").setValue(name).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    originalName = name;
+                    showToast("Name successfully updated!");
+                }
+            });
+        }
+    }
+
 
     private void checkUserSession() {
         FirebaseUser currentUser = auth.getCurrentUser();
