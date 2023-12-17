@@ -41,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
         setActionBar();
         setOnClickListeners();
         setUserDetails();
-
         disableEditTexts();
     }
 
@@ -92,7 +91,6 @@ public class ProfileActivity extends AppCompatActivity {
                         int bestScore = dataSnapshot.child("bestScore").getValue(Integer.class);
 
                         editTextCountry.setHint(country);
-                        // Supongamos que tienes un TextView llamado textViewBestScore para mostrar el bestScore
                         TextView textViewBestScore = findViewById(R.id.textViewBestScore);
                         textViewBestScore.setText(String.valueOf(bestScore));
                     }
