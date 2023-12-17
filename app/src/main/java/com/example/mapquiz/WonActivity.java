@@ -23,21 +23,21 @@ public class WonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_won);
 
+        //Se guardan los aciertos y fallos
         correct=getIntent().getIntExtra("Correct",0);
         wrong=getIntent().getIntExtra("Wrong",0);
         int max = correct+wrong;
 
-        resultText = findViewById(R.id.resultText);
-
+        //Se muestra en la barra de progreso y en texto la relación entre acierto/fallo
         CircularProgressBar circularProgressBar = findViewById(R.id.mycircularProgressBar);
         circularProgressBar.setProgressMax(max);
         circularProgressBar.setProgressWithAnimation((float) correct, 1000L);
-
+        resultText = findViewById(R.id.resultText);
         resultText.setText(correct+"/"+(max));
 
         btnShare=findViewById(R.id.btnShare);
-
         btnShare.setOnClickListener(new View.OnClickListener() {
+            //Se comparte el resultado del Quiz
             @Override
             public void onClick(View v) {
                 try {

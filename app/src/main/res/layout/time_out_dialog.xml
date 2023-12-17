@@ -20,7 +20,7 @@ android:layout_gravity="center">
         android:layout_marginTop="7dp"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:text="Te quedaste \nsin tiempo....."
+        android:text="You ran out\nof time..."
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -38,13 +38,12 @@ android:layout_gravity="center">
         android:layout_marginTop="7dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
-        android:text="Ver resultados"
+        android:text="See results"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:backgroundTint="@color/paleta5">
     </Button>
 
 </LinearLayout>
-
 
 </androidx.cardview.widget.CardView>
